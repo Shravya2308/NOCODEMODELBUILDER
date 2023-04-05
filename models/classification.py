@@ -5,6 +5,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
+from sklearn.ensemble import RandomForestClassifier
 
 sc = StandardScaler()
 lc_model = LogisticRegression()
@@ -36,14 +37,14 @@ def classifier(dataframe,estimators):
     lc_acc = accuracy_score(y_test, y_pred_l)
     # st.write(lc_acc)     
 
-    from sklearn.ensemble import RandomForestClassifier
+    #RANDOM FOREST
     global randomforest
     randomforest = RandomForestClassifier(n_estimators= estimators, criterion = 'entropy', random_state = 0)
     randomforest.fit(X_train, y_train)
    
     y_pred_c = randomforest.predict(X_test)
-    classifier_acc = accuracy_score(y_test, y_pred_c)
-    return {'lc_acc':lc_acc , 'classifier_acc':classifier_acc}
+    random_acc = accuracy_score(y_test, y_pred_c)
+    return {'lc_acc':lc_acc , 'random_acc':random_acc}
 
 def predict(list_of_variables):
     randomf_predict = randomforest.predict(sc.transform([list_of_variables]))

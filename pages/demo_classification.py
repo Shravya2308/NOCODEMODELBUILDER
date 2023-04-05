@@ -15,27 +15,21 @@ from models.classification import predict
 if 'file' in st.session_state:
     st.write(st.session_state['file'])
 
-if 'var1' not in st.session_state:
-    st.session_state['var1'] = ""
+if 'n_estimators' not in st.session_state:
+    st.session_state['n_estimators'] = ""
 
-# if 'var2' not in st.session_state:
-#     st.session_state['var2'] = ""
+
 n_estimators_o = st.number_input('no of estimators: ',min_value=5)
 if n_estimators_o:
-    st.session_state['var1'] = int(n_estimators_o)
-    st.write(st.session_state['var1'])
+    st.session_state['n_estimators'] = int(n_estimators_o)
+    st.write(st.session_state['n_estimators'])
 
 df = st.session_state['file']
-# for col in df.columns:
-#     st.write(col)  
-X = df.iloc[:, :-1].values
-y = df.iloc[:, -1].values 
+
+
 
 
 model = classifier(df,n_estimators_o)
-
-# st.write(X)
-# st.write(y)
 
 
 X_coloumns  = list(df.iloc[:, :-1].columns.values)
@@ -52,7 +46,7 @@ prediction = predict(list_of_variables)
 
 st.write(list_of_variables)
 # st.write(type(list_of_variables[0]))
-if model['classifier_acc']>model['lc_acc']:
+if model['random_acc']>model['lc_acc']:
     st.write(prediction['randomf_predict'])
     st.write('model chosen by ensemble learning==>random_forest')
 else:
