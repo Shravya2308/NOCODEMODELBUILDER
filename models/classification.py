@@ -6,7 +6,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.ensemble import RandomForestClassifier
-
+from sklearn.naive_bayes import GaussianNB
+from sklearn.svm import SVC
 sc = StandardScaler()
 lc_model = LogisticRegression()
 
@@ -44,9 +45,25 @@ def classifier(dataframe,estimators):
    
     y_pred_c = randomforest.predict(X_test)
     random_acc = accuracy_score(y_test, y_pred_c)
-    return {'lc_acc':lc_acc , 'random_acc':random_acc}
+
+    global naive_bayes
+    naive_bayes = GaussianNB()
+    naive_bayes.fit(X_train, y_train)
+    y_pred_n = naive_bayes.predict(X_test)
+    naive_acc = accuracy_score(y_test, y_pred_n)
+
+
+    
+    global svm
+    svm = SVC(kernel = 'rbf', random_state = 0)
+    svm.fit(X_train, y_train)
+    y_pred_s = svm.predict(X_test)
+    svm_acc = accuracy_score(y_test, y_pred_s)
+    return {'lc_acc':lc_acc , 'random_acc':random_acc , 'naive_acc':naive_acc,'svm_acc':svm_acc}
 
 def predict(list_of_variables):
     randomf_predict = randomforest.predict(sc.transform([list_of_variables]))
     logistic_predict =lc_model.predict(sc.transform([list_of_variables]))
-    return {'randomf_predict':randomf_predict,'logistic_predict':logistic_predict}
+    naive_predict =naive_bayes.predict(sc.transform([list_of_variables]))
+    svm_predict =svm.predict(sc.transform([list_of_variables]))
+    return {'randomf_predict':randomf_predict,'logistic_predict':logistic_predict,'naive_predict':naive_predict,'svm_predict':svm_predict}
