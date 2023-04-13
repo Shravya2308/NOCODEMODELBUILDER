@@ -26,23 +26,38 @@ st.title('_No code Model builder_')
 
 
 
-if 'file' not in st.session_state:
-    st.session_state['file'] = ""
+# if 'file' not in st.session_state:
+#     st.session_state['file'] = ""
+st.markdown("takes <span style='color:pink'>data,</span>,makes model,lets you **<span style='color:violet'>test</span>**   it.", unsafe_allow_html=True)
+st.divider()
+
+st.caption('upload your dataset for classification here:')
+
+classify = st.file_uploader('',type = ['csv','xlsx'])
 
 st.divider()
 
-upload_file = st.file_uploader('',type = ['csv','xlsx'])
+st.caption('upload your dataset for regression here:')
 
-st.divider()
+regression = st.file_uploader(' ',type = ['csv','xlsx'])
 
 
     
-if upload_file:
+if classify:
     if 'uploaded_file' not in st.session_state:
-        st.session_state['uploaded_file'] = upload_file.name
-    st.write("Filename: ", upload_file.name)
-    st.session_state['file'] = pd.read_csv(upload_file)
+        st.session_state['uploaded_file'] = classify.name
+    st.write("Filename: ", classify.name)
+    st.session_state['file'] = pd.read_csv(classify)
     st.write(st.session_state['file'])
+
+
+
+if regression:
+    if 'uploaded_file_egression' not in st.session_state:
+        st.session_state['uploaded_file_egression'] = regression.name
+    st.write("Filename: ", regression.name)
+    st.session_state['file_egression'] = pd.read_csv(regression)
+    st.write(st.session_state['file_egression'])
 
 # import base64
 # def add_bg_from_local(image_file):
