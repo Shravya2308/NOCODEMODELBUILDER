@@ -46,10 +46,10 @@ if 'file' in st.session_state:
 
     model = classifier(df,n_estimators_o)
 
-    st.write(model['lc_acc'])
-    st.write(model['random_acc'])
-    st.write(model['naive_acc'])
-    st.write(model['svm_acc'])
+    st.write('Logistic Regression',model['lc_acc'])
+    st.write('Random Forest',model['random_acc'])
+    st.write('Naive Bayes',model['naive_acc'])
+    st.write('SVM',model['svm_acc'])
 
     X_coloumns  = list(df.iloc[:, :-1].columns.values)
     st.write(X_coloumns)
